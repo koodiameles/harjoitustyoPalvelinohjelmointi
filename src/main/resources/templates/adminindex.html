@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Muokkaa juoma-arvostelulistaa</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="/resources/static/css/style.css" th:href="@{/css/style.css}" />
+	<style>/* style.css ^ */</style>
+	
+</head>
+
+	<!-- Otsikko, haku ja linkit. Navbar aina näkyvillä "liimattuna" sivun yläosassa -->
+	<nav>
+		<h1>Kotona pantujen ja valmistettujen juomien arvostelut</h1>
+		<ul>
+			<a href="/index"> Logout</a>
+            <p>Haku</p>
+            <a href="/adminindex"> Main page</a>
+			<a href="/addbeverage"> Lisää juoma</a>
+        </ul>
+	</nav>
+
+	<h2>Juomalista</h2>
+	<table>
+		<!-- Taulukon otsakkeet-->
+		<thead>
+			<tr>
+				<th>Nimi</th>
+				<th>Tyyppi</th>
+				<th>Tyylilaji</th>
+				<th>ABV%</th>
+				<th>Tähdet</th>
+				<th>Kuvaus</th>
+				<th>Tekijä</th>
+				<th colspan="2">Admin työkalut</th>
+			</tr>
+		</thead>
+		<!-- Taulukon sisältö-->
+		<tbody>
+			<tr th:each = "beverage : ${beverages}">
+				<td th:text = "${beverage.name}" ></td>
+				<td th:text = "${beverage.beveragetype.name}" ></td>
+				<td th:text = "${beverage.style}" ></td>
+				<td th:text = "${beverage.abv}" ></td>
+				<td th:text = "${beverage.points}" ></td>
+				<td th:text = "${beverage.notes}" ></td>
+				<td th:text = "${beverage.maker}" ></td>
+				<td><a class="buttondel" th:href="@{/delete/{id}(id=${beverage.id})}"> Del </a></td>
+				<td><a class="button" th:href="@{/edit/{id}(id=${beverage.id})}"> Edit </a></td>
+			</tr>
+		</tbody>
+	
+
+
+	</table>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,246 @@
+@charset "ISO-8859-1";
+
+/* RESETOI OLETUSMUOTOILUJA "Aloita puhtaalta pöydältä" */
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+
+/* BODY */
+body {
+   /*height: 100vh;*/
+   background: rgb(255,254,238);
+   background: linear-gradient(135deg, rgba(255,254,238,1) 0%, rgba(221,214,255,1) 77%, rgba(0, 113, 200, 0.8) 100%);
+}
+
+/* YLEISIÄ MUOTOILUJA */
+h1{
+	font-family:Arial;
+	font-size:2.5rem;
+    margin-bottom: 1rem;
+	font-weight:bold;	
+	text-align: center;	
+	color: #000000;
+}
+
+h2{
+	font-family:Arial;
+	font-size:2rem;
+    margin: 0.7rem;
+	font-weight:bold;	
+	text-align: center;	
+	color: #000000
+}
+
+/* NAVIGATION BAR. Jokaisen templaten yläosaan liimattu */
+nav {
+   padding: 1rem;
+   background: rgb(255,254,238);
+   background: linear-gradient(135deg, rgba(255,254,238,1) 0%, rgb(174, 159, 209) 77%, rgba(0, 113, 200, 0.8) 100%);
+   position: sticky; /* nav bar on aina näkyvillä ylhäällä, vaikka selaisit alaspäin*/
+   top: 0;
+   z-index: 1; /* nav bar on aina ylimmäinen näkyvä asia, eli muut asiat menevät sen alle piiloon*/
+   border-bottom: 1px solid rgb(167, 53, 0);
+   text-align: center;
+}
+
+nav a, p { 
+   display: inline;
+   text-decoration:overline underline;
+   font-size: 1.5rem;
+   padding: 1.5rem;
+   margin: 1.5rem;
+   color: rgb(0, 113, 212);
+   transition: color 0.5s, font-size 0.5s;
+}
+
+nav a:hover, p:hover {
+   color: rgb(0, 136, 255);
+   font-size: 1.7rem;
+}
+
+/* TAULUKOIDEN MUOTOILU */
+
+table {
+	margin-left: auto;
+	margin-right: auto;
+	font-family: Arial, Helvetica, sans-serif;
+	border-collapse: collapse;  
+	width: 65%;
+	text-align: center;
+   
+ }
+ table td, table th {
+   border: 0.1rem solid #ddd;
+   padding: 1rem; 
+   
+ }
+ table tbody tr:nth-child(even){background-color: #f2f2f2;}
+ table tbody tr:hover {background-color: #ddd;}
+ table th {
+   padding-top: 1rem;
+   padding-bottom: 1rem;
+   text-align: left;
+   background-color: #595e99;
+   color: white;
+ }
+
+
+/* FORMIN MUOTOILU (/addbeverage)*/
+form {
+	/*display: ;*/
+	justify-content: center;
+	align-items: center;
+}
+
+form input {
+   	width:30%;
+   	padding: 0.8rem;
+   	margin: 0.2rem;
+   	box-sizing: border-box;
+   	border: none;
+   	border-bottom: 0.2rem solid black;
+}
+form label {
+	color:#000000;
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font: size 1rem;;
+	font-weight:bold;
+}
+select {
+	font-size: 1.2rem;
+	width: 10%;
+	padding: 1rem;;
+	border: none;
+	border-radius: 0.2rem;
+	background-color:rgb(170, 197, 224);
+  }
+
+
+
+
+.line {
+   width:auto;
+   margin-top: 5px;
+   margin-bottom: 5px;
+   margin-left: 120px;
+   margin-right: 120px;
+   height: 0.2rem;
+   background-color: rgb(230, 130, 0);
+}
+
+.oikealle{
+	text-align: right;	
+	
+}
+
+.center {
+   margin-left: auto;
+   margin-right: auto;
+}
+
+/* Geneerisen buttonin muotoilu*/
+.button {
+	box-shadow: 0px 0.8rem 1rem -0.7rem #276873;
+	background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+	background-color:#599bb3;
+	border-radius:0.8rem;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font: size 1rem;;
+	font-weight:bold;
+	padding:0.5rem 1rem;
+	text-decoration:none;
+	text-shadow:0rem 0.1rem 0rem #3d768a;
+}
+.button:hover {
+	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+	background-color:#408c99;
+}
+.button:active {
+	position:relative;
+	top:0.1rem;
+}
+
+/* leveän buttonin muotoilu*/
+/* Suurempi levys, hitusen isompi fontti*/
+.buttonwide {
+	box-shadow: 0px 10px 14px -7px #276873;
+	background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+	background-color:#599bb3;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:16px;
+	font-weight:bold;
+	padding:10px 64px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #3d768a;
+}
+.buttonwide:hover {
+	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+	background-color:#408c99;
+}
+.buttonwide:active {
+	position:relative;
+	top:1px;
+}
+
+/* Poista(del) buttonin muotoilu*/
+/* Punaisen s�vy. Hover effekti kirkas puna */
+.buttondel {
+	box-shadow: 0px 10px 14px -7px #276873;
+	background:linear-gradient(to bottom, #d44c4c 5%, #408c99 100%);
+	background-color:#d44c4c;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:14px;
+	font-weight:bold;
+	padding:8px 17px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #3d768a;
+}
+.buttondel:hover {
+	background:linear-gradient(to bottom, #ff0000 5%, #d44c4c 100%);
+	background-color:#ff0000;
+}
+.buttondel:active {
+	position:relative;
+	top:1px;
+}
+
+/* Lis��(add) buttonin muotoilu*/
+/* Hieman suurempi nappi. Vihers�vyinen. Hover effekti kirkkkaampi vihre� s�vy */
+.buttonadd {
+	box-shadow: 0px 10px 14px -7px #276873;
+	background:linear-gradient(to bottom, #3ead5c 5%, #408c99 100%);
+	background-color:#3ead5c;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:16px;
+	font-weight:bold;
+	padding:10px 20px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #3d768a;
+}
+.buttonadd:hover {
+	background:linear-gradient(to bottom, #0cf00c 5%, #599bb3 100%);
+	background-color:#0cf00c;
+}
+.buttonadd:active {
+	position:relative;
+	top:1px;
+}
+

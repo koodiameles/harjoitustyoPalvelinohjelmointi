@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Muokkaa juoma-arvostelulistaa</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="/resources/static/css/style.css" th:href="@{/css/style.css}" />
+	<style>/* style.css ^ */</style>
+	
+</head>
+
+<body>
+
+	<!-- Otsikko, haku ja linkit. Navbar aina näkyvillä "liimattuna" sivun yläosassa -->
+	<nav>
+		<h1>Lisää juoma</h1>
+		<ul>
+            <a href="/adminindex"> Takaisin / Main page</a>
+        </ul>
+	</nav>
+
+	<div style="text-align: center;"> 
+		<h2>Uusi juoma</h2>
+		<form th:object="${beverage}" th:action="@{save}" action="#" method="post">
+		  	<label for="name">Nimi</label>
+			<input type="text" id="name" th:field="*{name}" />
+			<div></div>
+			
+		  	<label for="style">Tyyli</label>
+			<input type="text" id="style" th:field="*{style}" />
+			<div></div>
+			
+		  	<label for="abv">ABV</label>
+			<input type="text" id="abv" th:field="*{abv}" />
+			<div></div>
+			
+			<label for="points">Tähdet</label>
+			<input type="text" id="points" th:field="*{points}" />
+			<div></div>
+			
+			<label for="notes">Kuvaus</label>
+			<input type="text" if="notes" th:field="*{notes}" />
+			<div></div>
+
+			<label for="maker">Tekijä</label>
+			<input  type="text" if="maker" th:field="*{maker}" />
+			<div></div>
+
+			<label for="beveragetypelist">Juoman tyyppi</label>
+			<select id="beveragetypelist" th:field="*{beveragetype}">
+				  <option th:each="beveragetype: ${beveragetypes}" th:value="${beveragetype.id}" th:text="${beveragetype.name}"></option>
+			</select>
+			<div></div>
+			
+			<div>
+				<input type="submit" value="Save" />
+			</div>
+		</form>
+	</div>
+
+</body>
+</html>

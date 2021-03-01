@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Juoma-arvostelut</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Juoma-arvosteluohjelma. Ensisijaisesti kotipantujen juomien arvosteluiden tallennukseen">
+	<link type="text/css" rel="stylesheet" href="/resources/static/css/style.css" th:href="@{/css/style.css}" />
+	<style>/* style.css ^ */</style>
+
+</head>
+
+<body>
+
+	<!-- Otsikko, haku ja linkit. Navbar aina näkyvillä "liimattuna" sivun yläosassa -->
+	<nav>
+		<h1>Kotona pantujen ja valmistettujen juomien arvostelut</h1>
+		<ul>
+			<a href="/adminindex"> Admin login</a>
+            <p>Haku</p>
+            <a href="/index"> Main page</a>
+        </ul>
+	</nav>
+
+	<h2>Juomalista</h2>
+	<!-- kuvan saa näin  <img src="..static/images/laptop.jpg" th:src="@{images/laptop.jpg}" alt="*Kuva ei ladannut* Kuva laptopista"> -->
+	<table>
+		<!-- Taulukon otsakkeet-->
+		<thead>
+			<tr>
+				<th>Nimi</th>
+				<th>Tyyppi</th>
+				<th>Tyylilaji</th>
+				<th>ABV%</th>
+				<th>Tähdet</th>
+				<th>Kuvaus</th>
+				<th>Tekijä</th>
+			</tr>
+		</thead>
+		<!-- Taulukon sisältö-->
+		<tbody>
+			<tr th:each = "beverage : ${beverages}">
+				<td th:text = "${beverage.name}" ></td>
+				<td th:text = "${beverage.beveragetype.name}" ></td>
+				<td th:text = "${beverage.style}" ></td>
+				<td th:text = "${beverage.abv}" ></td>
+				<td th:text = "${beverage.points}" ></td>
+				<td th:text = "${beverage.notes}" ></td>
+				<td th:text = "${beverage.maker}" ></td>
+			</tr>
+		</tbody>
+	
+	</table>
+
+
+</body>
+</html>
