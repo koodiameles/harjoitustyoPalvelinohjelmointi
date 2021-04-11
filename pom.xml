@@ -14,7 +14,7 @@
 	<name>harjoitustyo</name>
 	<description>Kurssin harjoitustyo</description>
 	<properties>
-		<java.version>14</java.version>
+		<java.version>11</java.version>
 	</properties>
 
 	<!-- DEPET -->
@@ -73,6 +73,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency> 
+
+	<!-- TEST (Herokua varten) -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
 
 
 	</dependencies>
