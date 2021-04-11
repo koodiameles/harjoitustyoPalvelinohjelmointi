@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface BeveragetypeRepository extends JpaRepository<Beveragetype, Long> {
+public interface MakerRepository extends JpaRepository<Maker, Long> {
     
-    List<Beveragetype> findByName(String name);
+    List<Maker> findByName(String name);
 }

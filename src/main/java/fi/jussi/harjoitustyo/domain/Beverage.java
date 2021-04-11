@@ -6,6 +6,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+
 
 @Entity
 public class Beverage {
@@ -13,22 +17,28 @@ public class Beverage {
     //OMINAISUUDET
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;			// id
-    private String name;        // juoman nimi
-    private String maker;       // juoman valmistaja
-    private String style;       // juoman tarkempi tyyli, esim. lager, porter, punaviini, mansikkaviini
-    private String notes;       // juoman sanallista kuvailua ja arvostelua
-    private double points;      // juoman pisteet "tähdet" 1-5
-    private double abv;         // alcohol by volume eli 'prossat' %
+    private Long id;				// id
+    @NotBlank(message = "Nimi on pakollinen")
+	private String name;       		// juoman nimi
+    private String style;      		// juoman tarkempi tyyli, esim. lager, porter, punaviini, mansikkaviini
+    private String notes;     		// juoman sanallista kuvailua ja arvostelua
+	@DecimalMax("5.0") @DecimalMin("1.0")
+    private double points;     		// juoman pisteet "tähdet" 1-5
+	@DecimalMax("99.0") @DecimalMin("0.0") 
+    private double abv;        		// alcohol by volume eli 'prossat' %
+
 
     @ManyToOne
     @JoinColumn(name = "typeid")
     private Beveragetype beveragetype;  // juoman tyyppi esim. olut, viini
 
+	@ManyToOne
+    @JoinColumn(name = "makerid")
+    private Maker maker;  // juoman tekijä
+
 
     //KONSTRUKTORIT
-
-    public Beverage(String name, String maker, String style, String notes, double points, double abv, Beveragetype beveragetype) {
+    public Beverage(String name, Maker maker, String style, String notes, double points, double abv, Beveragetype beveragetype) {
 		this.name = name;
 		this.maker = maker;
 		this.style = style;
@@ -65,11 +75,11 @@ public class Beverage {
 		this.name = name;
 	}
 
-	public String getMaker() {
+	public Maker getMaker() {
 		return maker;
 	}
 
-	public void setMaker(String maker) {
+	public void setMaker(Maker maker) {
 		this.maker = maker;
 	}
 
@@ -115,8 +125,8 @@ public class Beverage {
 
 	@Override
 	public String toString() {
-		return "Beverage [abv=" + abv + ", id=" + id + ", maker=" + maker + ", name=" + name + ", notes=" + notes
-				+ ", points=" + points + ", style=" + style + ", Beveragetype=" + beveragetype + "]";
+		return "Beverage [abv=" + abv + ", beveragetype=" + beveragetype + ", id=" + id + ", maker=" + maker + ", name="
+				+ name + ", notes=" + notes + ", points=" + points + ", style=" + style + "]";
 	}
 
 	

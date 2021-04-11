@@ -12,35 +12,35 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
-public class Beveragetype {
+public class Maker {
 
     //OMINAISUUDET
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
-    private Long typeid;
-    private String name;                 // tyypin/kategorian nimi
+    private Long makerid;
+    private String name;                 //  tekijän nimi
 
 	@JsonBackReference
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "beveragetype")
-    private List<Beverage> beverages;    // lista tämän kategorian juomille
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "maker")
+    private List<Beverage> beverages;    // lista tämän tekijän tekemille juomille
 
 
     //KONSTRUKTORIT
-    public Beveragetype(String name) {
+    public Maker(String name) {
         super();
 		this.name = name;
 	}
-    public Beveragetype() {
+    public Maker() {
         super();
 	}
 
     //SETIT JA GETIT
-	public Long getTypeid() {
-		return typeid;
+	public Long getMakerid() {
+		return makerid;
 	}
 
-	public void setTypeid(Long typeid) {
-		this.typeid = typeid;
+	public void setMakerid(Long makerid) {
+		this.makerid = makerid;
 	}
 
 	public String getName() {
@@ -62,7 +62,7 @@ public class Beveragetype {
 	
 	@Override
 	public String toString() {
-		return "Beveragetype [name=" + name + ", typeid=" + typeid + "]";
+		return "Beveragetype [name=" + name + ", makerid=" + makerid + "]";
 	}
 
 }

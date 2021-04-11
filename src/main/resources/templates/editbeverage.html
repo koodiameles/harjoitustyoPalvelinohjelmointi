@@ -1,11 +1,13 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 <head>
 	<title>Muokkaa juoma-arvostelulistaa</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link type="text/css" rel="stylesheet" href="/resources/static/css/style.css" th:href="@{/css/style.css}" />
 	<style>/* style.css ^ */</style>
-	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Icon library ^ -->
+
 </head>
 
 <body>
@@ -14,51 +16,42 @@
 	<nav>
 		<h1>Muokkaa juomaa</h1>
 		<ul>
-            <a href="/adminindex"> Takaisin / Main page</a>
+            <a th:href="@{/index}"> Takaisin / Main page</a>
         </ul>
+		<h1>-</h1>
 	</nav>
 
-	<div style="text-align: center;"> 
-		<h2>Muokkaa juomaa</h2>
-		<form th:object="${beverage}" th:action="@{/save}" action="#" method="post">
-
+		<form th:object="${beverage}" th:action="@{/saveedit}" action="#" method="post" id="editbeverage" class="addform">
+			<h2>Muokkaa juomaa</h2>
 			<input type="hidden" id="id" th:field="*{id}" />
 
 		  	<label for="name">Nimi</label>
 			<input type="text" id="name" th:field="*{name}" />
-			<div></div>
-			
+	
 		  	<label for="style">Tyyli</label>
 			<input type="text" id="style" th:field="*{style}" />
-			<div></div>
 			
 		  	<label for="abv">ABV</label>
 			<input type="text" id="abv" th:field="*{abv}" />
-			<div></div>
 			
 			<label for="points">Tähdet</label>
 			<input type="text" id="points" th:field="*{points}" />
-			<div></div>
-			
-			<label for="notes">Kuvaus</label>
-			<input type="text" if="notes" th:field="*{notes}" />
-			<div></div>
 
 			<label for="maker">Tekijä</label>
-			<input type="text" if="maker" th:field="*{maker}" />
-			<div></div>
+			<select id="makerlist" th:field="*{maker}">
+					<option th:each="maker: ${makers}" th:value="${maker.makerid}" th:text="${maker.name}"></option>
+			</select>
 
 			<label for="beveragetypelist">Juoman tyyppi</label>
 			<select id="beveragetypelist" th:field="*{beveragetype}">
-				  <option th:each="beveragetype: ${beveragetypes}" th:value="${beveragetype.id}" th:text="${beveragetype.name}"></option>
+				  <option th:each="beveragetype: ${beveragetypes}" th:value="${beveragetype.typeid}" th:text="${beveragetype.name}"></option>
 			</select>
-			<div></div>
+
+			<label for="notes">Kuvaus</label>
+			<textarea id="notes" th:field="*{notes}" class="formbigfield" ></textarea>
 			
-			<div>
-				<input type="submit" value="Save" />
-			</div>
+			<button type="submit" form="editbeverage" value="Save" class="formbutton">Save Beverage</button>
 		</form>
-	</div>
 
 </body>
 </html>

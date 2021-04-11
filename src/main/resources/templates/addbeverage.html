@@ -1,10 +1,12 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 <head>
 	<title>Muokkaa juoma-arvostelulistaa</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link type="text/css" rel="stylesheet" href="/resources/static/css/style.css" th:href="@{/css/style.css}" />
 	<style>/* style.css ^ */</style>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<!-- Icon library ^ -->
 	
 </head>
 
@@ -12,49 +14,121 @@
 
 	<!-- Otsikko, haku ja linkit. Navbar aina näkyvillä "liimattuna" sivun yläosassa -->
 	<nav>
-		<h1>Lisää juoma</h1>
+		<h1>Admin työkalut</h1>
 		<ul>
-            <a href="/adminindex"> Takaisin / Main page</a>
+			<a th:href="@{/index}"> Takaisin / Main page</a>
         </ul>
+		<h1>Lisää juomia, tekijöitä ja juomatyyppejä</h1>
 	</nav>
 
-	<div style="text-align: center;"> 
-		<h2>Uusi juoma</h2>
-		<form th:object="${beverage}" th:action="@{save}" action="#" method="post">
-		  	<label for="name">Nimi</label>
-			<input type="text" id="name" th:field="*{name}" />
-			<div></div>
-			
-		  	<label for="style">Tyyli</label>
-			<input type="text" id="style" th:field="*{style}" />
-			<div></div>
-			
-		  	<label for="abv">ABV</label>
-			<input type="text" id="abv" th:field="*{abv}" />
-			<div></div>
-			
-			<label for="points">Tähdet</label>
-			<input type="text" id="points" th:field="*{points}" />
-			<div></div>
-			
-			<label for="notes">Kuvaus</label>
-			<input type="text" if="notes" th:field="*{notes}" />
-			<div></div>
+	<!-- Juomien, tyyppien ja tekijöiden lisääminen tai poisto -->
+	<div class="flexcontainer">
+			<!-- UUSI JUOMA tai POISTA JUOMA-->
+			<form th:object="${beverage}" th:action="@{save}" action="#" method="post" id="addbeverage" class="addform">
+				<h3>Uusi juoma</h3>
+				<label for="name">Nimi</label>
+				<input type="text" id="name" th:field="*{name}" placeholder="Nimi" />
+				<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Anna nimi</label>
 
-			<label for="maker">Tekijä</label>
-			<input  type="text" if="maker" th:field="*{maker}" />
-			<div></div>
+				<label for="maker">Tekijä</label>
+				<select id="makerlist" th:field="*{maker}">
+						<option th:each="maker: ${makers}" th:value="${maker.makerid}" th:text="${maker.name}"></option>
+				</select>
 
-			<label for="beveragetypelist">Juoman tyyppi</label>
-			<select id="beveragetypelist" th:field="*{beveragetype}">
-				  <option th:each="beveragetype: ${beveragetypes}" th:value="${beveragetype.id}" th:text="${beveragetype.name}"></option>
-			</select>
-			<div></div>
+				<label for="beveragetypelist">Juoman tyyppi</label>
+				<select id="beveragetypelist" th:field="*{beveragetype}">
+						<option th:each="beveragetype: ${beveragetypes}" th:value="${beveragetype.typeid}" th:text="${beveragetype.name}"></option>
+				</select>
+
+				<label for="style">Tyyli</label>
+				<input type="text" id="style" th:field="*{style}" placeholder="Tyyli" />
+				
+				<label for="abv">ABV (x.x)</label>
+				<input type="text" id="abv" th:field="*{abv}" placeholder="5.0" />
+				<label th:if="${#fields.hasErrors('abv')}" th:errors="*{abv}">Alkoholiprosentti täytyy olla väliltä 0-99</label>
 			
-			<div>
-				<input type="submit" value="Save" />
-			</div>
-		</form>
+				<label for="points">Tähdet (1-5) </label>
+				<input type="text" id="points" th:field="*{points}" placeholder="1" />
+				<label th:if="${#fields.hasErrors('points')}" th:errors="*{points}">Juoman pisteet voivat olla väliltä 1-5</label>	<!--  jos tähän kohdistuu virheitä validoinnin perusteella, anna virheviesti -->
+				<!--<div class="break"></div>  rivinvaihto-->
+				
+				<label for="notes">Kuvaus</label>
+				<textarea id="notes" th:field="*{notes}" class="formbigfield" placeholder="Oikein raikas ja kiva" ></textarea>
+				<button type="submit" form="addbeverage" value="Save" class="formbutton">Save Beverage</button>
+
+				<!-- JUOMAN poistamiseen taulukko kaikista juomista -->
+				<table sec:authorize="hasAuthority ('ADMIN')">
+					<h3>Poista juomia</h3>
+					<!-- Taulukon otsakkeet-->
+					<thead>
+						<tr>
+							<th>Nimi</th>
+							<th sec:authorize="hasAuthority('ADMIN')" style="text-align:center"><i class="fa fa-cogs"></i></th>
+						</tr>
+					</thead>
+					<!-- Taulukon sisältö-->
+					<tbody>
+						<tr th:each = "beverage : ${beverages}">
+							<td th:text = "${beverage.name}" ></td>
+							<td sec:authorize="hasAuthority('ADMIN')"><a class="fa fa-trash fa-lg" th:href="@{/delete2/{id}(id=${beverage.id})}"></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+
+			<!-- UUSI TYYPPI tai POISTA TYYPPI-->
+			<form th:object="${beveragetype}" th:action="@{savetype}" action="#" method="post" id="addtype" class="addform">
+				<h3>Lisää juomatyyppi</h3>
+				<label for="name">-</label>
+				<input type="text" id="typename" th:field="*{name}" placeholder="Olut / Viini / Siideri"/>
+				<button type="submit" form="addtype" value="Save" class="formbutton">Save Type</button>
+
+				<!-- Tyyppien poistamiseen taulukko -->
+				<table sec:authorize="hasAuthority ('ADMIN')">
+					<h3>Poista juomatyyppejä</h3>
+					<!-- Taulukon otsakkeet-->
+					<thead>
+						<tr>
+							<th>Tyyppi</th>
+							<th sec:authorize="hasAuthority('ADMIN')" style="text-align:center"><i class="fa fa-cogs"></i></th>
+						</tr>
+					</thead>
+					<!-- Taulukon sisältö-->
+					<tbody>
+						<tr th:each = "beveragetype : ${beveragetypes}">
+							<td th:text = "${beveragetype.name}" ></td>
+							<td sec:authorize="hasAuthority('ADMIN')"><a class="fa fa-trash fa-lg" th:href="@{/deletetype/{id}(id=${beveragetype.typeid})}"></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+
+			<!-- UUSI TEKIJÄ tai POISTA TEKIJÄ-->
+			<form th:object="${maker}" th:action="@{savemaker}" action="#" method="post" id="addmaker" class="addform">
+				<h3>Lisää tekijä</h3>
+				<label for="name">-</label>
+				<input type="text" id="makername" th:field="*{name}" placeholder="Keisari" />
+				<button type="submit" form="addmaker" value="Save" class="formbutton">Save Maker</button>
+
+				<!-- Tekijän poistamiseen taulukko -->
+				<table sec:authorize="hasAuthority ('ADMIN')">
+					<h3>Poista tekijöitä</h3>
+					<!-- Taulukon otsakkeet-->
+					<thead>
+						<tr>
+							<th>Tekijä</th>
+							<th sec:authorize="hasAuthority('ADMIN')" style="text-align:center"><i class="fa fa-cogs"></i></th>
+						</tr>
+					</thead>
+					<!-- Taulukon sisältö-->
+					<tbody>
+						<tr th:each = "maker : ${makers}">
+							<td th:text = "${maker.name}" ></td>
+							<td sec:authorize="hasAuthority('ADMIN')"><a class="fa fa-trash fa-lg" th:href="@{/deletemaker/{id}(id=${maker.makerid})}"></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
 	</div>
 
 </body>
